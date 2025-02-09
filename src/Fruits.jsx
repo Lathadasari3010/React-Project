@@ -8,6 +8,7 @@ function Fruits() {
     let dispatch = useDispatch();
     
     const [filter, setFilter] = useState('all'); // 'all', 'below100', 'above100'
+    const [searchTerm, setSearchTerm] = useState(""); // Search term state
 
     console.log("Fruit Items from Store:", fruitItems); // Debugging
 
@@ -23,9 +24,38 @@ function Fruits() {
         return true;
     });
 
+    // Filter by search term
+    filteredItems = filteredItems.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="container-fluid mt-4">
-            <h1 className="text-center mb-4">Fruits</h1>
+            {/* Heading with Fruit Emojis */}
+            <h1 className="text-center mb-4">
+                <span role="img" aria-label="Apple">🍎</span>
+                <span role="img" aria-label="Banana">🍌</span>
+                Fruits
+                <span role="img" aria-label="Grapes">🍇</span>
+                <span role="img" aria-label="Orange">🍊</span>
+               
+            </h1>
+
+            {/* Search Bar with Search Emoji */}
+            <div className="mb-3 d-flex justify-content-start">
+                <div className="input-group" style={{ maxWidth: "400px" }}>
+                    <span className="input-group-text" style={{ backgroundColor: "#f8f9fa" }}>
+                        🔍 {/* Search Emoji */}
+                    </span>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Fruits..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
 
             {/* Price Filter */}
             <div className="mb-3 d-flex gap-3">

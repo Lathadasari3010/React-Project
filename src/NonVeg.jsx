@@ -8,60 +8,95 @@ function NonVegItems() {
     let dispatch = useDispatch();
     
     const [filter, setFilter] = useState('all'); // 'all', 'below1000', 'above1000'
-    const [pageNumber, setPageNumber] = useState(1);
-    const perPage = 3;
+    const [searchTerm, setSearchTerm] = useState("");
 
     console.log("Non-Veg Items from Store:", nonVegItems); // Debugging
 
     // Filter non-veg items based on selected price range
     let filteredItems = nonVegItems.filter(item => {
-        if (filter === 'all') return true;
-        if (filter === 'below1000') return item.price < 1000;
-        if (filter === 'above1000') return item.price >= 1000;
+        if (filter === 'all') {
+            return true;
+        } else if (filter === 'below1000') {
+            return item.price < 1000;
+        } else if (filter === 'above1000') {
+            return item.price >= 1000;
+        }
         return true;
     });
 
-    let totalPages = Math.ceil(filteredItems.length / perPage);
-    let pageStartIndex = (pageNumber - 1) * perPage;
-    let pageEndIndex = pageStartIndex + perPage;
-    let currentItems = filteredItems.slice(pageStartIndex, pageEndIndex);
-
-    const handlePage = (page) => {
-        if (page >= 1 && page <= totalPages) {
-            setPageNumber(page);
-        }
-    };
+    // Search logic: Filter items by name based on the search term
+    filteredItems = filteredItems.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="container mt-4">
-            <h1 className="text-center mb-4">Non-Veg Items</h1>
+            {/* Heading with Chicken, Fish, Mutton, and Prawns Emojis */}
+            <h1 className="text-center mb-4">
+                <span role="img" aria-label="Chicken">🐔</span>
+                
+                Non-Veg Items
+                <span role="img" aria-label="Fish">🐟</span>
+                
+                
+            </h1>
+
+            {/* Search Bar aligned to the left */}
+            <div className="mb-3 d-flex justify-content-start">
+                <div className="input-group" style={{ maxWidth: "400px" }}>
+                <span className="input-group-text" style={{ backgroundColor: "#f8f9fa" }}>
+                        🔍 {/* Search Emoji */}
+                    </span>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Non-Veg Items..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
 
             {/* Price Filter */}
             <div className="mb-3 d-flex gap-3">
-                {["all", "below1000", "above1000"].map((type) => (
-                    <div key={type} className="form-check">
-                        <input 
-                            type="radio" 
-                            className="form-check-input"
-                            checked={filter === type} 
-                            onChange={() => {
-                                setFilter(type);
-                                setPageNumber(1);  // Reset page to 1 when filter changes
-                            }} 
-                        />
-                        <label className="form-check-label">
-                            <strong>
-                                {type === "all" ? "Show All" : type === "below1000" ? "Below $1000" : "Above $1000"}
-                            </strong>
-                        </label>
-                    </div>
-                ))}
+                {/* Show All Checkbox */}
+                <div className="form-check">
+                    <input 
+                        type="radio" 
+                        className="form-check-input"
+                        checked={filter === 'all'} 
+                        onChange={() => setFilter('all')} 
+                    />
+                    <label className="form-check-label"><strong>Show All</strong></label>
+                </div>
+
+                {/* Below $1000 Checkbox */}
+                <div className="form-check">
+                    <input 
+                        type="radio" 
+                        className="form-check-input"
+                        checked={filter === 'below1000'} 
+                        onChange={() => setFilter('below1000')} 
+                    />
+                    <label className="form-check-label">Below $1000</label>
+                </div>
+
+                {/* Above $1000 Checkbox */}
+                <div className="form-check">
+                    <input 
+                        type="radio" 
+                        className="form-check-input"
+                        checked={filter === 'above1000'} 
+                        onChange={() => setFilter('above1000')} 
+                    />
+                    <label className="form-check-label">Above $1000</label>
+                </div>
             </div>
 
             {/* Display Non-Veg Items */}
             <div className="row">
-                {currentItems.length > 0 ? (
-                    currentItems.map((item, index) => (
+                {filteredItems.length > 0 ? (
+                    filteredItems.map((item, index) => (
                         <div key={index} className="col-md-4 mb-4">
                             <div className="card shadow-sm">
                                 <img 
@@ -87,37 +122,6 @@ function NonVegItems() {
                     <p className="text-danger text-center">No items available...</p>
                 )}
             </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="d-flex justify-content-center mt-4">
-                    <button 
-                        className="btn btn-secondary mx-1"
-                        onClick={() => handlePage(pageNumber - 1)}
-                        disabled={pageNumber === 1}
-                    >
-                        Previous
-                    </button>
-
-                    {[...Array(totalPages)].map((_, index) => (
-                        <button 
-                            key={index} 
-                            className={`btn ${pageNumber === index + 1 ? "btn-primary" : "btn-light"} mx-1`}
-                            onClick={() => handlePage(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-
-                    <button 
-                        className="btn btn-secondary mx-1"
-                        onClick={() => handlePage(pageNumber + 1)}
-                        disabled={pageNumber === totalPages}
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
         </div>
     );
 }

@@ -13,62 +13,62 @@ import { logout } from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Nav.css";
 import Fruits from "./Fruits";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
-   let cart = useSelector(state => state.cart);
-   let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-   
-   let auth = useSelector(state => state.auth);
-   let isAuthenticated = auth.isAuthenticated;
-   let user = auth.user;
-   let dispatch = useDispatch();
+  let cart = useSelector((state) => state.cart);
+  let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  let auth = useSelector((state) => state.auth);
+  let isAuthenticated = auth.isAuthenticated;
+  let user = auth.user;
+  let dispatch = useDispatch();
 
   return (
     <BrowserRouter>
-      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#007bff" }}>
-        <div className="container-fluid">
-          <Link to='/home' className="navbar-brand text-white">Home</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item"><Link to='/veg' className="nav-link text-white">VegItems</Link></li>
-              <li className="nav-item"><Link to='/nonveg' className="nav-link text-white">NonVeg</Link></li>
-              <li className="nav-item"><Link to='/fruits' className="nav-link text-white">Fruits</Link></li>
-              <li className="nav-item"><Link to='/orders' className="nav-link text-white">Orders</Link></li>
-              <li className="nav-item"><Link to='/aboutus' className="nav-link text-white">About Us</Link></li>
-              <li className="nav-item"><Link to='/contactus' className="nav-link text-white">Contact Us</Link></li>
-            </ul>
-            <div className="d-flex align-items-center">
-              <Link to='/cart' className="btn btn-outline-light me-3 flex-grow-0">Cart <span className="badge bg-danger">{totalItems}</span></Link>
-              {isAuthenticated ? (
-                <div className="d-flex align-items-center flex-grow-0">
-                  <span className="me-3 text-white">Welcome, {user}!</span>
-                  <button onClick={() => dispatch(logout())} className="btn btn-danger">Sign Out</button>
-                </div>
-              ) : (
-                <Link to='/login' className="btn btn-success flex-grow-0">Sign In</Link>
-              )}
-            </div>
-          </div>
+      <nav className="navbar navbar-expand-lg container-fluid" style={{ backgroundColor: "#007bff" }}>
+        <Link to="/home" className="navbar-brand text-white">
+          <i className="fa-solid fa-house"></i> Home
+        </Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item"><Link to="/veg" className="nav-link text-white"><i className="fa-solid fa-carrot"></i> VegItems</Link></li>
+            <li className="nav-item"><Link to="/nonveg" className="nav-link text-white"><i className="fa-solid fa-drumstick-bite"></i> NonVeg</Link></li>
+            <li className="nav-item"><Link to="/fruits" className="nav-link text-white"><i className="fa-solid fa-apple-whole"></i> Fruits</Link></li>
+            <li className="nav-item"><Link to="/orders" className="nav-link text-white"><i className="fa-solid fa-clock-rotate-left"></i> Orders</Link></li>
+            <li className="nav-item"><Link to="/aboutus" className="nav-link text-white"><i className="fa-solid fa-address-card"></i> About Us</Link></li>
+            <li className="nav-item"><Link to="/contactus" className="nav-link text-white"><i className="fa-solid fa-phone-volume"></i> Contact Us</Link></li>
+          </ul>
+          <Link to="/cart" className="btn btn-outline-light me-3">
+            <i className="fa-solid fa-cart-shopping"></i> Cart <span className="badge bg-danger">{totalItems}</span>
+          </Link>
+          {isAuthenticated ? (
+            <>
+              <span className="text-white me-3">Welcome, {user}!</span>
+              <button onClick={() => dispatch(logout())} className="btn btn-danger">Sign Out</button>
+            </>
+          ) : (
+            <Link to="/login" className="btn btn-success">Sign In</Link>
+          )}
         </div>
       </nav>
-     
-      <div className="container mt-4">
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/veg" element={<VegItems />} />
-          <Route path="/nonveg" element={<NonVeg />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/fruits" element={<Fruits/>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/veg" element={<VegItems />} />
+        <Route path="/nonveg" element={<NonVeg />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/fruits" element={<Fruits />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} /> {/* Default NotFound route */}
+      </Routes>
     </BrowserRouter>
   );
 }
