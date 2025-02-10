@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart, decrement, increment, purchaseDetails, remove } from "./store";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 function Cart() {
     let dispatch = useDispatch();
@@ -125,7 +126,7 @@ function Cart() {
                     <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="Empty Cart" width="200" />
                     <h2 className="text-secondary mt-3">Your Cart is Empty</h2>
                     <p className="text-muted">Looks like you haven't added anything yet. Start shopping now!</p>
-                    <a href="/home" className="btn btn-primary">Browse Products</a>
+                    <Link to="/" className="btn btn-primary mt-4">Browse Products</Link>
                 </div>
             )}
 

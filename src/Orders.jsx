@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Orders() {
     let orderItems = useSelector(state => state.purchase) || [];
@@ -65,7 +66,7 @@ function Orders() {
                     />
                     <h2 className="text-danger mt-3">No Orders Available</h2>
                     <p className="text-muted">It looks like you haven't placed any orders yet.</p>
-                    <a href="/home" className="btn btn-primary mt-3">Start Shopping</a>
+                    <Link to="/" className="btn btn-primary mt-4">Start Shopping</Link>
 
                    
                 </div>
