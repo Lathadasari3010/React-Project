@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./store";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function VegItems() {
@@ -9,6 +9,8 @@ function VegItems() {
 
   const [filter, setFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const perPage = 6;
 
   // Filtering logic
   let filteredItems = vegItems.filter(item => 
@@ -21,31 +23,38 @@ function VegItems() {
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  let totalPages = Math.ceil(filteredItems.length / perPage);
+
+  useEffect(() => {
+    if (pageNumber > totalPages) setPageNumber(1);
+  }, [filteredItems.length, totalPages]);
+
+  let pageStartIndex = (pageNumber - 1) * perPage;
+  let currentItems = filteredItems.slice(pageStartIndex, pageStartIndex + perPage);
+
   return (
     <section className="container mt-4">
-      {/* Heading with Vegetable Emojis */}
       <h1 className="text-center mb-4">
         <span role="img" aria-label="Capsicum">🌶️</span>
         <span role="img" aria-label="Cauliflower">🥦</span> 
         Veg Items
         <span role="img" aria-label="Potato">🥔</span>
         <span role="img" aria-label="Tomato">🍅</span>
-        
-      
       </h1>
 
-      {/* Search Bar aligned to the left */}
+      {/* Search Bar */}
       <div className="mb-3 d-flex justify-content-start">
         <div className="input-group" style={{ maxWidth: "400px" }}>
-                    <span className="input-group-text" style={{ backgroundColor: "#f8f9fa" }}>
-                        🔍 {/* Search Emoji */}
-                    </span>
+          <span className="input-group-text" style={{ backgroundColor: "#f8f9fa" }}>🔍</span>
           <input
             type="text"
             className="form-control"
             placeholder="Search Veg Items..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPageNumber(1);
+            }}
           />
         </div>
       </div>
@@ -58,7 +67,10 @@ function VegItems() {
               type="radio" 
               className="form-check-input" 
               checked={filter === type} 
-              onChange={() => setFilter(type)} 
+              onChange={() => {
+                setFilter(type);
+                setPageNumber(1);
+              }} 
             />
             <strong>{type === "all" ? "Show All" : type === "below100" ? "Below $100" : "Above $100"}</strong>
           </label>
@@ -66,9 +78,9 @@ function VegItems() {
       </div>
 
       {/* Display Veg Items */}
-      {filteredItems.length > 0 ? (
+      {currentItems.length > 0 ? (
         <div className="row">
-          {filteredItems.map(item => (
+          {currentItems.map(item => (
             <article key={item.id} className="col-md-4 mb-4">
               <div className="card shadow-sm">
                 <img src={item.image} className="card-img-top" alt={item.name} style={{ height: "200px", objectFit: "cover" }} />
@@ -85,6 +97,29 @@ function VegItems() {
         </div>
       ) : (
         <p className="text-danger text-center">No items available...</p>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <nav className="d-flex justify-content-center mt-4 gap-2">
+          <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber === 1}>
+            Previous
+          </button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <button 
+              key={index} 
+              className={`btn ${pageNumber === index + 1 ? "btn-primary" : "btn-light"}`} 
+              onClick={() => setPageNumber(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber === totalPages}>
+            Next
+          </button>
+        </nav>
       )}
     </section>
   );

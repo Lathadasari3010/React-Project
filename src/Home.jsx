@@ -40,7 +40,7 @@ function Home() {
             </Slider>
 
             {/* Go & Shop Button */}
-            <Link to="/shop" className="btn btn-primary btn-lg px-5 shadow my-3" style={{ marginTop: "0" }}>
+            <Link to="/veg" className="btn btn-primary btn-lg px-5 shadow my-3" style={{ marginTop: "0" }}>
                 Go & Shop Now
             </Link>
 
