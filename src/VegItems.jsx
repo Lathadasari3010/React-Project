@@ -34,11 +34,11 @@ function VegItems() {
 
   return (
     <section className="container mt-4">
-      <h1 className="text-center mb-4">
-        <span role="img" aria-label="Capsicum">🌶️</span>
-        <span role="img" aria-label="Cauliflower">🥦</span> 
+      <h1 className="text-center mb-4" style={{color:'red'}}>
+        <span role="img" aria-label="Cauliflower">🥕</span> 
         Veg Items
-        <span role="img" aria-label="Potato">🥔</span>
+        <span role="img" aria-label="Potato">
+        🍆</span>
         <span role="img" aria-label="Tomato">🍅</span>
       </h1>
 
@@ -82,12 +82,19 @@ function VegItems() {
         <div className="row">
           {currentItems.map(item => (
             <article key={item.id} className="col-md-4 mb-4">
-              <div className="card shadow-sm">
-                <img src={item.image} className="card-img-top" alt={item.name} style={{ height: "200px", objectFit: "cover" }} />
-                <div className="card-body text-center">
+              <div className="card shadow-sm h-100 d-flex flex-column">
+                <div className="image-container text-center p-3" style={{ height: "250px" }}>
+                  <img 
+                    src={item.image} 
+                    className="card-img-top" 
+                    alt={item.name} 
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }} 
+                  />
+                </div>
+                <div className="card-body text-center d-flex flex-column flex-grow-1">
                   <h5 className="card-title">{item.name}</h5>
-                  <p className="text-success fw-bold">${item.price}</p>
-                  <button className="btn btn-primary w-100" onClick={() => dispatch(addToCart(item))}>
+                  <p className="text-success fw-bold">₹{item.price}</p>
+                  <button className="btn btn-warning w-100 mt-auto" onClick={() => dispatch(addToCart(item))}>
                     Add to Cart
                   </button>
                 </div>
@@ -102,7 +109,11 @@ function VegItems() {
       {/* Pagination */}
       {totalPages > 1 && (
         <nav className="d-flex justify-content-center mt-4 gap-2">
-          <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber === 1}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={() => setPageNumber(pageNumber - 1)} 
+            disabled={pageNumber === 1}
+          >
             Previous
           </button>
 
@@ -116,7 +127,11 @@ function VegItems() {
             </button>
           ))}
 
-          <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber === totalPages}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={() => setPageNumber(pageNumber + 1)} 
+            disabled={pageNumber === totalPages}
+          >
             Next
           </button>
         </nav>

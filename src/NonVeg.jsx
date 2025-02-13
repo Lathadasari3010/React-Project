@@ -6,8 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function NonVegItems() {
     let nonVegItems = useSelector(state => state.products.nonvegItems) || [];
     let dispatch = useDispatch();
-    
-    const [filter, setFilter] = useState('all');
+
+    const [filter, setFilter] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
     const perPage = 6;
@@ -18,7 +18,7 @@ function NonVegItems() {
         filter === "above1000" ? item.price >= 1000 : true
     );
 
-    // Search logic
+    // Search logic: Filter items by name based on the search term
     filteredItems = filteredItems.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -33,8 +33,14 @@ function NonVegItems() {
     let currentItems = filteredItems.slice(pageStartIndex, pageStartIndex + perPage);
 
     return (
-        <div className="container mt-4">
-            <h1 className="text-center mb-4">🐔 Non-Veg Items 🐟</h1>
+        <section className="container mt-4">
+            <h1 className="text-center mb-4" style={{color:'red'}}>
+                
+                <span role="img" aria-label="Fish">🐟</span> 
+                Non-Veg Items
+                <span role="img" aria-label="Meat">🐔</span>
+                
+            </h1>
 
             {/* Search Bar */}
             <div className="mb-3 d-flex justify-content-start">
@@ -54,7 +60,7 @@ function NonVegItems() {
             </div>
 
             {/* Price Filter */}
-            <div className="mb-3 d-flex gap-3">
+            <div className="d-flex gap-3 mb-3">
                 {["all", "below1000", "above1000"].map(type => (
                     <label key={type} className="form-check-label d-flex align-items-center gap-2">
                         <input 
@@ -72,31 +78,42 @@ function NonVegItems() {
             </div>
 
             {/* Display Non-Veg Items */}
-            <div className="row">
-                {currentItems.length > 0 ? (
-                    currentItems.map(item => (
-                        <div key={item.id} className="col-md-4 mb-4">
-                            <div className="card shadow-sm">
-                                <img src={item.image} className="card-img-top" alt={item.name} style={{ height: "200px", objectFit: "cover" }} />
-                                <div className="card-body text-center">
+            {currentItems.length > 0 ? (
+                <div className="row">
+                    {currentItems.map(item => (
+                        <article key={item.id} className="col-md-4 mb-4">
+                            <div className="card shadow-sm h-100 d-flex flex-column">
+                                <div className="image-container text-center p-3" style={{ height: "250px" }}>
+                                    <img 
+                                        src={item.image} 
+                                        className="card-img-top" 
+                                        alt={item.name} 
+                                        style={{ width: "100%", height: "100%", objectFit: "contain" }} 
+                                    />
+                                </div>
+                                <div className="card-body text-center d-flex flex-column flex-grow-1">
                                     <h5 className="card-title">{item.name}</h5>
-                                    <p className="text-success fw-bold">${item.price}</p>
-                                    <button className="btn btn-primary w-100" onClick={() => dispatch(addToCart(item))}>
+                                    <p className="text-success fw-bold">₹{item.price}</p>
+                                    <button className="btn btn-warning w-100 mt-auto" onClick={() => dispatch(addToCart(item))}>
                                         Add to Cart
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-danger text-center">No items available...</p>
-                )}
-            </div>
+                        </article>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-danger text-center">No items available...</p>
+            )}
 
             {/* Pagination */}
             {totalPages > 1 && (
                 <nav className="d-flex justify-content-center mt-4 gap-2">
-                    <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber === 1}>
+                    <button 
+                        className="btn btn-secondary" 
+                        onClick={() => setPageNumber(pageNumber - 1)} 
+                        disabled={pageNumber === 1}
+                    >
                         Previous
                     </button>
 
@@ -110,12 +127,16 @@ function NonVegItems() {
                         </button>
                     ))}
 
-                    <button className="btn btn-secondary" onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber === totalPages}>
+                    <button 
+                        className="btn btn-secondary" 
+                        onClick={() => setPageNumber(pageNumber + 1)} 
+                        disabled={pageNumber === totalPages}
+                    >
                         Next
                     </button>
                 </nav>
             )}
-        </div>
+        </section>
     );
 }
 

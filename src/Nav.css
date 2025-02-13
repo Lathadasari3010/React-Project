@@ -38,6 +38,7 @@ body {
     z-index: 1000;
 }
 
+
 /* Navigation Links */
 .navbar .linkstyle {
     text-decoration: none;
@@ -65,24 +66,6 @@ body {
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Image Grid */
-.image-grid-container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Center images */
-    gap: 10px; /* Spacing between images */
-    padding: 20px;
-}
-
-/* Individual Image Styling */
-.image-grid-container img {
-    width: calc(100% / 5 - 10px); /* 5 columns, adjust as needed */
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px; /* Rounded corners */
-}
 
 /* Cart and Authentication Buttons */
 .navbar .d-flex {
@@ -141,9 +124,4 @@ body {
         width: 100%;
         text-align: center;
     }
-
-    .image-grid-container img {
-        width: calc(100% / 2 - 10px); /* 2 columns on smaller screens */
-    }
 }
-

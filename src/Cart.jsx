@@ -61,7 +61,8 @@ function Cart() {
         <div className="container mt-5">
             {cartObjects.length > 0 ? (
                 <>
-                    <h1 className="mb-4 text-center">Your Cart 🛒</h1>
+                    <h1 className="mb-4 text-center" style={{color:'red'}}>Your Cart 🛒</h1>
+                    <h4 style={{color:'darkblue'}}> Here are your selected items!</h4>
 
                     <ul className="list-group mb-4">
                         {cartObjects.map((item, index) => (
@@ -117,14 +118,14 @@ function Cart() {
                         </div>
                     )}
 
-                    <p className="fw-bold">Net Amount to Pay: ${finalPrice.toFixed(2)}</p>
+                    <p className="fw-bold" style={{color:'deeppink'}}>Net Amount to Pay: ${finalPrice.toFixed(2)}</p>
 
                     <button className="btn btn-primary btn-lg w-100" onClick={completePurchase}>Complete Purchase</button>
                 </>
             ) : (
                 <div className="text-center">
                     <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" alt="Empty Cart" width="200" />
-                    <h2 className="text-secondary mt-3">Your Cart is Empty</h2>
+                    <h2 className="text-secondary mt-3" >Your Cart is Empty</h2>
                     <p className="text-muted">Looks like you haven't added anything yet. Start shopping now!</p>
                     <Link to="/" className="btn btn-primary mt-4">Browse Products</Link>
                 </div>
@@ -133,7 +134,7 @@ function Cart() {
             {/* Loan EMI Calculator (Only if total price > 1000) */}
             {totalPrice > 1000 && (
                 <div className="card p-4 mt-5 shadow-lg">
-                    <h2 className="text-center mb-3">Loan EMI Calculator</h2>
+                    <h2 className="text-center mb-3" style={{color:'blueviolet'}}>Loan EMI Calculator</h2>
 
                     <div className="mb-3">
                         <label className="form-label">Principal Amount: ${principal.toLocaleString()}</label>

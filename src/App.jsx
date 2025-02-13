@@ -14,6 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Nav.css";
 import Fruits from "./Fruits";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import MilkItems from "./MilkItems";
 
 function App() {
   let cart = useSelector((state) => state.cart);
@@ -27,6 +28,8 @@ function App() {
   return (
     <BrowserRouter>
       <nav className="navbar navbar-expand-lg container-fluid" style={{ backgroundColor: "#007bff" }}>
+       
+
         <Link to="/home" className="navbar-brand text-white">
           <i className="fa-solid fa-house"></i> Home
         </Link>
@@ -38,6 +41,8 @@ function App() {
             <li className="nav-item"><Link to="/veg" className="nav-link text-white"><i className="fa-solid fa-carrot"></i> VegItems</Link></li>
             <li className="nav-item"><Link to="/nonveg" className="nav-link text-white"><i className="fa-solid fa-drumstick-bite"></i> NonVeg</Link></li>
             <li className="nav-item"><Link to="/fruits" className="nav-link text-white"><i className="fa-solid fa-apple-whole"></i> Fruits</Link></li>
+            <li className="nav-item"><Link to="/milk" className="nav-link text-white"><i class="fa-solid fa-cow"></i>Milk Products</Link></li>
+
             <li className="nav-item"><Link to="/orders" className="nav-link text-white"><i className="fa-solid fa-clock-rotate-left"></i> Orders</Link></li>
             <li className="nav-item"><Link to="/aboutus" className="nav-link text-white"><i className="fa-solid fa-address-card"></i> About Us</Link></li>
             <li className="nav-item"><Link to="/contactus" className="nav-link text-white"><i className="fa-solid fa-phone-volume"></i> Contact Us</Link></li>
@@ -61,6 +66,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/veg" element={<VegItems />} />
         <Route path="/nonveg" element={<NonVeg />} />
+        <Route path="/milk" element={<MilkItems />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/aboutus" element={<AboutUs />} />

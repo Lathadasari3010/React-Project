@@ -34,19 +34,19 @@ function ContactUs() {
           <h2 className="mt-4 text-primary fw-bold">Get in Touch</h2>
           <p className="text-muted">We’re here to assist you! Reach out to us anytime.</p>
           <p className="fw-bold text-dark">
-            📧 Email: <span className="text-primary">support@example.com</span>
+            📧 Email: <span className="text-primary">support@company.com</span>
           </p>
           <p className="fw-bold text-dark">
-            📞 Phone: <span className="text-success">+1 (234) 567-890</span>
+            📞 Phone: <span className="text-success">+91 9876543201</span>
           </p>
           <p className="fw-bold text-dark">
-            📍 Address: <span className="text-danger">123 Main St, New York, USA</span>
+            📍 Address: <span className="text-danger">123 Main St, Ameerpet,Hyderabad,India</span>
           </p>
         </div>
 
         {/* Right Side: Contact Form */}
         <div className="col-md-6">
-          <h2 className="text-primary fw-bold text-center">Contact Us</h2>
+          <h2 className=" fw-bold text-center" style={{color:'red'}}>Contact Us ☎️</h2>
 
           {submitted && <div className="alert alert-success text-center">Your message has been sent!</div>}
 
